@@ -43,7 +43,7 @@ export const AccountForm = ({ id, defaultValues, onSubmit, onDelete, disabled }:
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Nama</FormLabel>
               <FormControl>
                 <Input disabled={disabled} placeholder="Contoh: Cash, Bank, Kartu Kredit" {...field} />
               </FormControl>
