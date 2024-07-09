@@ -17,7 +17,7 @@ type formValues = z.input<typeof formSchema>;
 
 export const EditAccountSheet = () => {
   const { isOpen, onClose, id } = useOpenAccount();
-  const [ConfirmDialog, confirm] = useConfirm('Apakah kamu yakin?', 'Anda akan melakukan penghapusan transaksi');
+  const [ConfirmDialog, confirm] = useConfirm('Apakah kamu yakin?', 'Anda akan melakukan penghapusan transaksi.');
 
   const accountQuery = useGetAccount(id);
   const editMutation = useEditAccount(id);
