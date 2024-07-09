@@ -6,6 +6,7 @@ import { SortingState, ColumnFiltersState, ColumnDef, flexRender, getCoreRowMode
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useConfirm } from '@/hooks/use-confirm';
 import { Trash } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
@@ -17,6 +18,8 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({ columns, data, filterKey, onDelete, disabled }: DataTableProps<TData, TValue>) {
+  const [ConfirmDialog, confirm] = useConfirm('Apakah kamu yakin?', 'Anda akan melakukan penghapusan ');
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = React.useState({});
@@ -39,10 +42,22 @@ export function DataTable<TData, TValue>({ columns, data, filterKey, onDelete, d
 
   return (
     <div>
+      <ConfirmDialog />
       <div className="flex items-center py-4">
         <Input placeholder={`Filter ${filterKey}`} value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ''} onChange={(event) => table.getColumn(filterKey)?.setFilterValue(event.target.value)} className="max-w-sm" />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button disabled={disabled} size="sm" variant="outline" className="ml-auto font-normal text-xs">
+          <Button
+            disabled={disabled}
+            size="sm"
+            variant="outline"
+            className="ml-auto font-normal text-xs"
+            onClick={async () => {
+              const ok = await confirm();
+              if (ok) {
+                onDelete(table.getFilteredSelectedRowModel().rows), table.resetRowSelection();
+              }
+            }}
+          >
             <Trash className="size-4 mr-2" />
             Hapus ({table.getFilteredSelectedRowModel().rows.length})
           </Button>
