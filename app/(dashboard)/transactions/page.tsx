@@ -9,8 +9,34 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { columns } from './columns';
 import { useGeTransactions } from '@/features/transactions/api/use-get-transactions';
 import { useBulkDeleteTransactions } from '@/features/transactions/api/use-bulk-delete-transaction';
+import { useState } from 'react';
+import { UploadButton } from './upload-button';
+import { ImportCard } from './import-card';
+
+enum VARIANTS {
+  LIST = 'LIST',
+  IMPORT = 'IMPORT',
+}
+
+const INITIAL_IMPORT_RESULTS = {
+  data: [],
+  errors: [],
+  meta: {},
+};
 
 const TransactionsPage = () => {
+  const [variant, setVariant] = useState<VARIANTS>(VARIANTS.LIST);
+  const [importResults, setImportResults] = useState(INITIAL_IMPORT_RESULTS);
+  const onUpload = (results: typeof INITIAL_IMPORT_RESULTS) => {
+    setImportResults(results);
+    setVariant(VARIANTS.IMPORT);
+  };
+
+  const onCancelImport = () => {
+    setImportResults(INITIAL_IMPORT_RESULTS);
+    setVariant(VARIANTS.LIST);
+  };
+
   const newTransaction = useNewTransaction();
   const deleteTransactions = useBulkDeleteTransactions();
   const transactionsQuery = useGeTransactions();
@@ -35,15 +61,26 @@ const TransactionsPage = () => {
     );
   }
 
+  if (variant === VARIANTS.IMPORT) {
+    return (
+      <>
+        <ImportCard data={importResults.data} onCancel={onCancelImport} onSubmit={() => {}} />
+      </>
+    );
+  }
+
   return (
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
           <CardTitle className="text-xl line-clamp-1">Riwayat Transaksi</CardTitle>
-          <Button onClick={newTransaction.onOpen} size="sm">
-            <Plus className="size-4 mr-2" />
-            Buat baru
-          </Button>
+          <div className="flex flex-col lg:flex-row gap-y-2 items-center gap-x-2">
+            <Button onClick={newTransaction.onOpen} size="sm" className="w-full lg:w-auto">
+              <Plus className="size-4 mr-2" />
+              Buat baru
+            </Button>
+            <UploadButton onUpload={onUpload} />
+          </div>
         </CardHeader>
         <CardContent>
           <DataTable
