@@ -22,6 +22,7 @@ export const useEditAccount = (id?: string) => {
       toast.success('Akun berhasil diperbarui');
       queryClient.invalidateQueries({ queryKey: ['account', { id }] });
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['transactionss'] });
 
       //todo
     },

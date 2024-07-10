@@ -20,6 +20,7 @@ export const useDeleteCategory = (id?: string) => {
       toast.success('Kategori berhasil dihapus');
       queryClient.invalidateQueries({ queryKey: ['category', { id }] });
       queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
 
       //todo
     },

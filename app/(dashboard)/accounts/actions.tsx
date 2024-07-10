@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Actions = ({ id }: Props) => {
-  const [ConfirmDialog, confirm] = useConfirm('Apakah kamu yakin?', 'Anda akan melakukan penghapusan transaksi.');
+  const [ConfirmDialog, confirm] = useConfirm('Apakah kamu yakin?', 'Anda akan melakukan penghapusan akun ini.');
 
   const deleteMutation = useDeleteAccount(id);
   const { onOpen } = useOpenAccount();

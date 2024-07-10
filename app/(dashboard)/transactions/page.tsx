@@ -2,23 +2,23 @@
 
 import { Loader2, Plus } from 'lucide-react';
 import { useNewTransaction } from '@/features/transactions/hooks/use-new-transaction';
-import { useGetAccounts } from '@/features/accounts/api/use-get-accounts';
-import { useBulkDeleteAccounts } from '@/features/accounts/api/use-bulk-delete';
 import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/Data-table';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { columns } from './columns';
+import { useGeTransactions } from '@/features/transactions/api/use-get-transactions';
+import { useBulkDeleteTransactions } from '@/features/transactions/api/use-bulk-delete-transaction';
 
 const TransactionsPage = () => {
   const newTransaction = useNewTransaction();
-  const deleteAccounts = useBulkDeleteAccounts();
-  const accountQuery = useGetAccounts();
-  const accounts = accountQuery.data || [];
+  const deleteTransactions = useBulkDeleteTransactions();
+  const transactionsQuery = useGeTransactions();
+  const transactions = transactionsQuery.data || [];
 
-  const isDisabled = accountQuery.isLoading || deleteAccounts.isPending;
+  const isDisabled = transactionsQuery.isLoading || deleteTransactions.isPending;
 
-  if (accountQuery.isLoading) {
+  if (transactionsQuery.isLoading) {
     return (
       <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
         <Card className="border-none drop-shadow-sm">
@@ -39,7 +39,7 @@ const TransactionsPage = () => {
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Akun</CardTitle>
+          <CardTitle className="text-xl line-clamp-1">Riwayat Transaksi</CardTitle>
           <Button onClick={newTransaction.onOpen} size="sm">
             <Plus className="size-4 mr-2" />
             Buat baru
@@ -47,12 +47,12 @@ const TransactionsPage = () => {
         </CardHeader>
         <CardContent>
           <DataTable
-            filterKey="name"
+            filterKey="payee"
             columns={columns}
-            data={accounts}
+            data={transactions}
             onDelete={(row) => {
               const ids = row.map((r) => r.original.id);
-              deleteAccounts.mutate({ ids });
+              deleteTransactions.mutate({ ids });
             }}
             disabled={isDisabled}
           />

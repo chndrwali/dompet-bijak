@@ -11,6 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { AmountInput } from '@/components/amount-input';
 import { insertTransactionSchema } from '@/db/schema';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { convertAmountToMiliunits } from '@/lib/utils';
 
 const formSchema = z.object({
   date: z.coerce.date(),
@@ -47,8 +48,13 @@ export const TransactionForm = ({ id, defaultValues, onSubmit, onDelete, disable
   });
 
   const handleSubmit = (values: formValues) => {
-    console.log({ values });
-    // onSubmit(values);
+    const amount = parseFloat(values.amount);
+    const amountInMiliunits = convertAmountToMiliunits(amount);
+
+    onSubmit({
+      ...values,
+      amount: amountInMiliunits,
+    });
   };
 
   const handleDelete = () => {
@@ -130,12 +136,12 @@ export const TransactionForm = ({ id, defaultValues, onSubmit, onDelete, disable
         />
 
         <Button className="w-full" disabled={disabled}>
-          {id ? 'Simpan perubahan' : 'Buat akun'}
+          {id ? 'Simpan perubahan' : 'Buat Transaksi'}
         </Button>
         {!!id && (
           <Button className="w-full" type="button" disabled={disabled} onClick={handleDelete} variant="outline">
             <Trash className="size-4 mr-2" />
-            Hapus akun
+            Hapus transaksi
           </Button>
         )}
       </form>

@@ -22,6 +22,7 @@ export const useEditCategory = (id?: string) => {
       toast.success('Kategori berhasil diperbarui');
       queryClient.invalidateQueries({ queryKey: ['category', { id }] });
       queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
 
       //todo
     },
