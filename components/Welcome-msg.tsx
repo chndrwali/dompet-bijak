@@ -11,7 +11,7 @@ const WelcomeMsg = () => {
         Selamat Datang{isLoaded ? ',' : ''}
         {user?.firstName}👋🏻
       </h2>
-      <p className="text-sm lg:text-base text-[#89b6fd]">Ini adalah Laporan Keuangan Anda</p>
+      <p className="text-sm lg:text-base text-white/90">Ini adalah Laporan Keuangan Anda</p>
     </div>
   );
 };
