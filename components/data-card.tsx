@@ -58,9 +58,9 @@ export const DataCard = ({ icon: Icon, title, value = 0, variant, dateRange, per
       </CardHeader>
       <CardContent>
         <h1 className="font-bold text-2xl mb-2 line-clamp-1 break-all">
-          <CountUp preserveValue start={0} end={value} decimals={2} decimalPlaces={2} formattingFn={formatCurrency} />
+          <CountUp preserveValue start={0} end={value} decimals={0} decimalPlaces={0} formattingFn={formatCurrency} />
         </h1>
-        <p className={cn('text-muted-foreground text-sm line-clamp-1', percentageChange > 0 && 'text-emerald-500', percentageChange < 0 && 'text-rose-500')}>{formatPercentage(percentageChange)} dari periode terakhir</p>
+        <p className={cn('text-muted-foreground text-sm line-clamp-1', percentageChange > 0 && 'text-emerald-500', percentageChange < 0 && 'text-rose-500')}>{formatPercentage(percentageChange, { addPrefix: true })} dari periode terakhir</p>
       </CardContent>
     </Card>
   );
