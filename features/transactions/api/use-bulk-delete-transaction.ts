@@ -18,7 +18,7 @@ export const useBulkDeleteTransactions = () => {
     onSuccess: () => {
       toast.success('Transaksi dihapus');
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      //TODO: invalidate smmary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk menghapus transaksi');

@@ -18,6 +18,7 @@ export const useCreateTransaction = () => {
     onSuccess: () => {
       toast.success('Transaksi berhasil dibuat');
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk membuat transaksi');

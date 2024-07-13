@@ -18,6 +18,7 @@ export const useCreateCategory = () => {
     onSuccess: () => {
       toast.success('Kategori berhasil dibuat.');
       queryClient.invalidateQueries({ queryKey: ['categories'] });
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk membuat kategori.');

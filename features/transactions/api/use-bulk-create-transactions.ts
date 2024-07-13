@@ -18,7 +18,7 @@ export const useBulkCreateTransactions = () => {
     onSuccess: () => {
       toast.success('Transaksi berhasil dibuat');
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      //TODO: invalidate smmary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk membuat transaksi');

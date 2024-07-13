@@ -18,7 +18,7 @@ export const useBulkDeleteCategories = () => {
     onSuccess: () => {
       toast.success('Kategori dihapus');
       queryClient.invalidateQueries({ queryKey: ['categories'] });
-      //TODO: invalidate smmary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk menghapus kategori');

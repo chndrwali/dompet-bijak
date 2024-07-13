@@ -18,7 +18,7 @@ export const useBulkDeleteAccounts = () => {
     onSuccess: () => {
       toast.success('Akun dihapus');
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
-      //TODO: invalidate smmary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk menghapus akun');

@@ -22,8 +22,7 @@ export const useEditTransaction = (id?: string) => {
       toast.success('Transaksi berhasil diperbarui');
       queryClient.invalidateQueries({ queryKey: ['transaction', { id }] });
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-
-      //todo
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk memperbarui transaksi');

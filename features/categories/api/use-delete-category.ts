@@ -21,8 +21,7 @@ export const useDeleteCategory = (id?: string) => {
       queryClient.invalidateQueries({ queryKey: ['category', { id }] });
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-
-      //todo
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => {
       toast.error('Gagal untuk menghapus kategori');
