@@ -25,10 +25,6 @@ const routes = [
     href: '/categories',
     label: 'Kategori',
   },
-  {
-    href: '/settings',
-    label: 'Setelan',
-  },
 ];
 
 const Navigation = () => {
